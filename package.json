@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@fastify/static": "^10.1.5",
+    "@mercuryworkshop/bare-mux": "^2.1.9",
+    "@mercuryworkshop/scramjet": "^1.1.0",
+    "fastify": "^5.12.5",
+    "http-proxy": "^1.18.1"
+  }
+}
