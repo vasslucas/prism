@@ -1,0 +1,275 @@
+/* ============ Monochrome Chrome-ish theme ============ */
+:root {
+  --bg-tabstrip: #dee1e6;      /* chrome strip behind tabs */
+  --bg-toolbar: #ffffff;       /* toolbar row */
+  --bg-active-tab: #ffffff;
+  --bg-inactive-tab: transparent;
+  --bg-hover: rgba(0, 0, 0, 0.06);
+  --bg-content: #f1f3f4;
+  --ink: #202124;              /* near-black text/icons */
+  --ink-dim: #5f6368;
+  --border: #dadce0;
+  --radius-tab: 0.8rem;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--bg-content);
+  display: flex;
+  flex-direction: column;
+}
+
+svg { width: 16px; height: 16px; fill: var(--ink); display: block; }
+
+/* ---------------- Tab strip ---------------- */
+.tab-strip {
+  display: flex;
+  align-items: flex-end;
+  background: var(--bg-tabstrip);
+  padding: 8px 8px 0 8px;
+  -webkit-app-region: drag;
+  user-select: none;
+  flex: 0 0 auto;
+}
+.tabs { display: flex; align-items: flex-end; overflow: hidden; flex: 0 1 auto; }
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  min-width: 90px;
+  max-width: 240px;
+  padding: 0 8px 0 12px;
+  margin-right: -0.55rem;   /* overlap so active tab's curves show */
+  border-radius: var(--radius-tab) var(--radius-tab) 0 0;
+  background: var(--bg-inactive-tab);
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: background 0.08s;
+}
+.tab:hover { background: var(--bg-hover); }
+
+.tab.active {
+  background: var(--bg-active-tab);
+  color: var(--ink);
+  z-index: 2;
+  height: 40px;
+  margin-bottom: -6px;
+  padding-bottom: 6px;
+}
+/* the concave corner "notches" of the active tab are faked with side borders */
+.tab.active::before, .tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+}
+.tab-favicon {
+  width: 16px; height: 16px; flex: 0 0 16px;
+  border-radius: 3px;
+  background: var(--ink-dim);
+  -webkit-mask: radial-gradient(circle, #000 60%, transparent 61%) center/10px 10px no-repeat, linear-gradient(#000,#000) center/6px 6px no-repeat;
+}
+.tab.active .tab-favicon { background: var(--ink); }
+.tab-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  line-height: 16px;
+}
+.tab-close {
+  flex: 0 0 16px;
+  width: 16px; height: 16px;
+  border: none; background: transparent;
+  border-radius: 50%;
+  color: inherit;
+  font-size: 13px; line-height: 1;
+  cursor: pointer;
+  display: grid; place-items: center;
+}
+.tab-close:hover { background: var(--bg-hover); }
+
+.newtab-btn {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  margin: 0 0 4px 0.35rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+}
+.newtab-btn:hover { background: var(--bg-hover); }
+
+.window-controls { margin-left: auto; display: flex; align-self: stretch; align-items: flex-start; padding-top: 2px; }
+.wc {
+  width: 40px; height: 28px;
+  border: none; background: transparent;
+  color: var(--ink); font-size: 12px; cursor: pointer;
+}
+.wc:hover { background: var(--bg-hover); }
+.wc-close:hover { background: #c0392b; color: #fff; }
+
+/* ---------------- Toolbar ---------------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-toolbar);
+  padding: 4px 8px 6px 8px;
+  flex: 0 0 auto;
+}
+.nav-buttons { display: flex; gap: 2px; }
+.nav-btn {
+  width: 28px; height: 28px;
+  border: none; background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid; place-items: center;
+}
+.nav-btn:hover { background: var(--bg-hover); }
+.nav-btn:disabled { opacity: 0.35; cursor: default; }
+.nav-btn:disabled:hover { background: transparent; }
+
+.omnibox-wrap { flex: 1; }
+.omnibox {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  border-radius: 17px;
+  background: var(--bg-content);
+  padding: 0 6px;
+}
+.omnibox:focus-within {
+  background: #fff;
+  outline: 2px solid var(--ink);
+}
+.omni-icon {
+  width: 26px; height: 26px;
+  border: none; background: transparent;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  cursor: pointer;
+  color: var(--ink-dim);
+}
+.omni-icon svg { width: 14px; height: 14px; fill: currentColor; }
+.omni-icon:hover { background: var(--bg-hover); }
+#address {
+  flex: 1;
+  border: none; outline: none; background: transparent;
+  font: inherit; font-size: 13px;
+  color: var(--ink);
+  padding: 0 6px;
+  text-overflow: ellipsis;
+}
+
+.toolbar-right { display: flex; align-items: center; gap: 2px; }
+.avatar {
+  width: 28px; height: 28px;
+  border: none; background: transparent;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  cursor: pointer;
+}
+.avatar svg { width: 20px; height: 20px; fill: var(--ink-dim); }
+.avatar:hover { background: var(--bg-hover); }
+
+/* ---------------- Content / frames ---------------- */
+.content { flex: 1; position: relative; background: #fff; }
+.content iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: none;
+  background: #fff;
+}
+.content iframe.visible { display: block; }
+
+/* ---------------- New Tab Page (per-tab overlay) ---------------- */
+.ntp {
+  position: absolute; inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-content);
+  color: var(--ink);
+  overflow-y: auto;
+}
+.ntp.visible { display: flex; }
+.ntp-logo {
+  margin-top: 14vh;
+  font-size: 76px;
+  letter-spacing: -4px;
+  font-weight: 400;
+  user-select: none;
+}
+.ntp-search {
+  margin-top: 34px;
+  width: min(560px, 90%);
+  height: 46px;
+  border-radius: 23px;
+  background: #fff;
+  border: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 1px 6px rgba(32,33,36,.12);
+}
+.ntp-search input {
+  flex: 1; border: none; outline: none;
+  font: inherit; font-size: 15px; color: var(--ink);
+  background: transparent;
+}
+.shortcuts {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 108px);
+  gap: 8px;
+  padding-bottom: 40px;
+}
+.shortcut {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; padding: 14px 4px;
+  border-radius: 8px; cursor: pointer;
+  color: var(--ink);
+}
+.shortcut:hover { background: rgba(0,0,0,.05); }
+.shortcut .tile {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #e8eaed;
+  display: grid; place-items: center;
+  font-size: 20px;
+}
+.shortcut .tile svg { width: 22px; height: 22px; fill: var(--ink-dim); }
+.shortcut span { font-size: 12px; max-width: 96px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* simple menu dropdown */
+.menu-pop {
+  position: fixed; right: 10px; top: 84px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 99;
+  display: none;
+}
+.menu-pop.open { display: block; }
+.menu-pop button {
+  display: block; width: 100%; text-align: left;
+  border: none; background: transparent;
+  padding: 8px 16px; font: inherit; cursor: pointer;
+}
+.menu-pop button:hover { background: var(--bg-hover); }
+.menu-sep { height: 1px; background: var(--border); margin: 6px 0; }
